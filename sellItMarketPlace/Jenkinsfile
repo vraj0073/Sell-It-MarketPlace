@@ -13,8 +13,8 @@ stages{
     // the code here can access $pass and $user
 
     sh "echo $pass |docker login --username $user --passowrd-stdin"
-                sh "docker build -t vraj0073/my_first_job:v1 ."
-                sh "docker push vraj0073/my_first_job:v1"
+                sh 'docker build -t vraj0073/my_first_job:v1 .'
+                sh 'docker push vraj0073/my_first_job:v1'
 
                 echo "Building the app vraj"
 }
