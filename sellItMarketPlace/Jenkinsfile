@@ -10,7 +10,7 @@ stages{
             script{
 
                 withCredentials([usernamePassword(credentialsId: 'docker-hub', passwordVariable: 'pass', usernameVariable: 'user')]) {
-                sh 'echo $pass |docker login --u $user --passowrd-stdin'
+                sh 'echo $pass |docker login --username $user --password-stdin'
                 sh 'docker build -t vraj0073/my_first_job:v1 .'
                 sh 'docker push vraj0073/my_first_job:v1'
                 echo "Building the app vraj"
