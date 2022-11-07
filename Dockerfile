@@ -1,7 +1,8 @@
 FROM node:16-alpine 
 WORKDIR /app
-RUN npm install
+RUN ls -a
 COPY . .
+RUN npm install
 EXPOSE 8080
 RUN npm run build
 
