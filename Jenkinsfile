@@ -10,10 +10,10 @@ stages{
             script{
 
                 withCredentials([usernamePassword(credentialsId: 'docker-hub', passwordVariable: 'pass', usernameVariable: 'user')]) {
-                sh 'docker build -t vraj0073/my_first_job:v1 .'
+                    
                 sh 'echo $pass |docker login --username $user --password-stdin' 
-                sh 'docker push vraj0073/my_first_job:v1'
-                echo "Building the app vraj"
+                sh 'docker push vraj0073/my_first_job:Sell_it_MarketPlace'
+                
 }
                 
             }
@@ -22,7 +22,14 @@ stages{
     stage("Deploy"){
         steps{
             script{
-                echo "Deploying the app vraj"
+                def dockerCmd = 'docker run -p 8080:8080 vraj0073/my_first_job:Sell_it_MarketPlace'
+                sshagent(credentials: ['ec2-user']){
+
+                sh "ssh -o StrickHostKeyChecking=no ec2-user@52.201.222.124 ${dockerCmd}"
+                echo "App Deployed"
+
+                }
+                
             }   
         }
     }
