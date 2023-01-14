@@ -1,0 +1,1 @@
+The web servers are deployed in an infrastructure that includes an AWS Virtual Private Cloud (VPC) that covers two availability zones (AZs) which includes both public and private subnets, and an Application Load Balancer (ALB) that directs traffic to an auto scaling group (ASG).
