@@ -2,15 +2,25 @@ pipeline{
 
 agent any
 stages{
+    stage("Build"){
 
-    stage("build"){
+        steps{
+
+            script{
+
+                sh 'npm install'
+                sh 'npm run build'
+                
+        }
+    }
+    stage("Docker Build and Push"){
 
         steps{
 
             script{
 
                 withCredentials([usernamePassword(credentialsId: 'docker-hub', passwordVariable: 'pass', usernameVariable: 'user')]) {
-                    
+                sh 'docker build -t vraj0073/my_first_job:Sell_it_MarketPlace .'   
                 sh 'echo $pass |docker login --username $user --password-stdin' 
                 sh 'docker push vraj0073/my_first_job:Sell_it_MarketPlace'
                 
@@ -19,19 +29,17 @@ stages{
             }
         }
     }
-    stage("Deploy"){
+
+stage("Pipeline Build"){
+
         steps{
+
             script{
-                def dockerCmd = 'docker run -p 8080:8080 vraj0073/my_first_job:Sell_it_MarketPlace'
-                sshagent(credentials: ['ec2-user']){
 
-                sh "ssh -o StrickHostKeyChecking=no ec2-user@52.201.222.124 ${dockerCmd}"
-                echo "App Deployed"
-
-                }
-                
-            }   
-        }
-    }
-    }
+               build job: 'ReleaseJob'
 }
+                
+            }
+        }
+    }    }
+    }
